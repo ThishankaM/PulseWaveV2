@@ -1,44 +1,156 @@
-# PulseWave Enhanced
+<div align="center">
 
-PulseWave Enhanced is a cleaned and secured PHP/MySQL music-streaming project.
-It preserves the original catalog and artwork while replacing the duplicated
-pages with a responsive, database-driven application.
+# 🎧 PulseWave
 
-## Main improvements
+### Music that moves at your frequency.
 
-- Clean `app`, `public`, `database`, and `storage` structure
-- PDO database connection with environment configuration
-- Prepared database queries and playlist ownership checks
-- CSRF-protected forms and safer session handling
-- User, artist, and administrator roles
-- Dynamic artists, genres, tracks, playlists, likes, follows, and history
-- Persistent responsive music player with seek, volume, shuffle, and repeat
-- Safe JSON search for tracks, artists, and genres
-- Mobile-friendly sign-in and registration
-- Artist/admin upload dashboard with file validation
-- Subscription requests without collecting card numbers or CVV values
-- Shared navigation, player, footer, error messages, and reusable UI components
+PulseWave is a modern, database-driven music streaming experience built with PHP, MySQL, and vanilla JavaScript. Discover artists, explore genres, create playlists, save favourites, and control playback from a persistent responsive player.
 
-No Composer or Node.js dependencies are required.
+<p>
+  <img src="https://img.shields.io/badge/PHP-8.1%2B-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP 8.1+">
+  <img src="https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL 8">
+  <img src="https://img.shields.io/badge/JavaScript-Vanilla-F7DF1E?style=for-the-badge&logo=javascript&logoColor=111111" alt="Vanilla JavaScript">
+  <img src="https://img.shields.io/badge/UI-Responsive-A855F7?style=for-the-badge" alt="Responsive UI">
+  <img src="https://img.shields.io/badge/Version-2.0.0-C084FC?style=for-the-badge" alt="Version 2.0.0">
+</p>
 
-## Requirements
+<p>
+  <a href="#-highlights">Highlights</a> •
+  <a href="#-showcase">Showcase</a> •
+  <a href="#-technology">Technology</a> •
+  <a href="#-quick-start">Quick start</a> •
+  <a href="#-project-structure">Structure</a>
+</p>
+
+<br>
+
+<img src="Screenshot%202026-07-28%20233645%281%29.png" alt="PulseWave home page" width="100%">
+
+</div>
+
+## ✨ Highlights
+
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <h3>🎵 Immersive playback</h3>
+      Persistent playback across pages with seek, volume, shuffle, repeat, previous, and next controls.
+    </td>
+    <td width="50%" valign="top">
+      <h3>🔎 Music discovery</h3>
+      Browse tracks by genre, search the catalog, explore artist profiles, and discover new favourites.
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <h3>💜 Personal library</h3>
+      Create playlists, like tracks, follow artists, and keep listening history tied to your account.
+    </td>
+    <td width="50%" valign="top">
+      <h3>👤 Role-based experience</h3>
+      Dedicated permissions and workflows for listeners, artists, and administrators.
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <h3>📱 Responsive design</h3>
+      A polished dark interface designed to feel consistent across desktop, tablet, and mobile screens.
+    </td>
+    <td width="50%" valign="top">
+      <h3>🛡️ Safer foundations</h3>
+      PDO prepared statements, CSRF-protected forms, session hardening, ownership checks, and validated uploads.
+    </td>
+  </tr>
+</table>
+
+## 🖼️ Showcase
+
+<table>
+  <tr>
+    <td width="50%" align="center" valign="top">
+      <strong>Explore the catalog</strong><br><br>
+      <img src="README assets\Screenshot 2026-07-28 233659.png" alt="PulseWave Explore page" width="100%">
+    </td>
+    <td width="50%" align="center" valign="top">
+      <strong>Discover artists</strong><br><br>
+      <img src="README assets\Screenshot 2026-07-28 233708.png" alt="PulseWave Artists page" width="100%">
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" align="center" valign="top">
+      <strong>Artist profiles</strong><br><br>
+      <img src="README assets\Screenshot 2026-07-28 233740.png" alt="PulseWave artist profile" width="100%">
+    </td>
+    <td width="50%" align="center" valign="top">
+      <strong>Your personal library</strong><br><br>
+      <img src="README assets\Screenshot 2026-07-28 233719.png" alt="PulseWave Library page" width="100%">
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" align="center" valign="top">
+      <strong>Flexible listening plans</strong><br><br>
+      <img src="README assets\Screenshot 2026-07-28 233726.png" alt="PulseWave Upgrade page" width="100%">
+    </td>
+    <td width="50%" align="center" valign="top">
+      <strong>Sign in and create an account</strong><br><br>
+      <img src="README assets\Screenshot 2026-07-28 233820.png" alt="PulseWave authentication page" width="100%">
+    </td>
+  </tr>
+</table>
+
+> [!NOTE]
+> Keep the seven supplied screenshot files beside `README.md`, using their original filenames, so the complete gallery renders on GitHub.
+
+## 🚀 What you can do
+
+- Browse a dynamic catalog of tracks, artists, and genres
+- Search tracks, artists, and genres through a JSON API
+- Play music with a persistent cross-page audio controller
+- Create and manage personal playlists
+- Like favourite tracks and follow artists
+- View artist profiles, follower counts, and available releases
+- Maintain account-specific listening history
+- Register, sign in, edit a profile, and sign out securely
+- Upload tracks and artwork from artist and administrator dashboards
+- Compare plans and submit subscription requests
+
+## 🧰 Technology
+
+| Layer | Technology | Purpose |
+| --- | --- | --- |
+| Front end | HTML5, CSS3, vanilla JavaScript | Responsive interface and player interactions |
+| Back end | PHP 8.1+ | Routing, authentication, business logic, and APIs |
+| Database | MySQL 8 / MariaDB 10.4+ | Catalog, accounts, playlists, likes, follows, and history |
+| Data access | PDO | Prepared queries and consistent database access |
+| Web server | Apache | Local XAMPP development and `.htaccess` protection |
+| Configuration | `.env` | Environment-specific database and application settings |
+
+There are no Composer or Node.js dependencies.
+
+## ⚡ Quick start
+
+### Requirements
 
 - PHP 8.1 or newer
 - MySQL 8 or MariaDB 10.4+
 - Apache or another PHP-compatible web server
 - PHP extensions: `pdo_mysql`, `mbstring`, and `fileinfo`
 
-## Installation with XAMPP
+### XAMPP installation
 
-1. Extract the project into:
+1. Place the project in your XAMPP document root:
 
    ```text
    C:\xampp\htdocs\PulseWave_Enhanced
    ```
 
-2. Copy `.env.example` to `.env`.
+2. Copy the environment template:
 
-3. Update the database values in `.env`. For a normal local XAMPP installation:
+   ```text
+   .env.example → .env
+   ```
+
+3. Configure the local database in `.env`:
 
    ```env
    DB_HOST=127.0.0.1
@@ -54,102 +166,99 @@ No Composer or Node.js dependencies are required.
    database/schema.sql
    ```
 
-   This creates a new `pulsewave` database and does not overwrite the original
-   `project` database.
+5. Add the audio files as described in [Audio files](#-audio-files).
 
-5. Open:
+6. Start Apache and MySQL, then visit:
 
    ```text
    http://localhost/PulseWave_Enhanced/public/
    ```
 
-The application detects its URL automatically. Set `APP_URL` in `.env` only
-when automatic detection is not suitable.
+The application detects its base URL automatically. Set `APP_URL` in `.env` only when automatic detection is unsuitable.
 
-## Recommended database account for deployment
+## 🔊 Audio files
 
-Do not use the MySQL `root` account outside a local development computer.
-
-```sql
-CREATE USER 'pulsewave_user'@'localhost' IDENTIFIED BY 'a-strong-password';
-GRANT SELECT, INSERT, UPDATE, DELETE ON pulsewave.* TO 'pulsewave_user'@'localhost';
-FLUSH PRIVILEGES;
-```
-
-Place the same username and password in `.env`.
-
-## Audio files
-
-Audio is intentionally excluded because it makes the ZIP too large. Copy the
-files from the original `audio` folder into:
+Audio is intentionally excluded from the project archive to keep it lightweight. Copy the original audio files into:
 
 ```text
 public/uploads/audio/
 ```
 
-Keep the original filenames. The enhanced database already uses the matching
-paths. More information is available in
-`public/uploads/audio/README.md`.
+Keep the original filenames because the database already references the matching paths. For large uploads, increase `upload_max_filesize` and `post_max_size` in `php.ini`, then restart Apache.
 
-For large uploads, update `upload_max_filesize` and `post_max_size` in
-`php.ini`, then restart Apache.
+## 🗂️ Project structure
 
-## Accounts
+```text
+PulseWave_Enhanced/
+├── app/
+│   ├── Core/               # Database, authentication, and CSRF
+│   ├── Repositories/       # Catalog and library data operations
+│   ├── Support/            # Shared helper functions
+│   └── Views/partials/     # Navigation, search, player, and footer
+├── database/
+│   ├── schema.sql          # Clean database installation
+│   └── legacy/             # Original SQL dump for reference
+├── public/
+│   ├── actions/            # Validated POST request handlers
+│   ├── api/                # Catalog, search, and history endpoints
+│   ├── assets/             # Application CSS and JavaScript
+│   ├── uploads/            # Artwork and external audio storage
+│   └── *.php               # User-facing pages
+├── storage/logs/           # Application error logs
+├── .env.example            # Environment configuration template
+└── README.md
+```
 
-The user and artist accounts from the supplied SQL file are retained with their
-existing password hashes.
+For production, configure the web server document root to `public/`.
 
-A local administrator is included for testing:
+## 🔐 Accounts and roles
+
+| Role | Capabilities |
+| --- | --- |
+| Listener | Browse, play, search, like, follow, and manage playlists |
+| Artist | Listener features plus track and artwork uploads |
+| Administrator | Catalog oversight, uploads, and application management |
+
+A local administrator account is included for testing:
 
 ```text
 Email: admin@pulsewave.local
 Password: PulseWave123!
 ```
 
-Change or delete this account before publishing the application.
+> Change or remove the demo administrator before publishing the application.
 
-## Project structure
+## 🛡️ Security
 
-```text
-PulseWave_Enhanced/
-├── app/
-│   ├── Core/             Database, authentication, and CSRF protection
-│   ├── Repositories/     Catalog and library database operations
-│   ├── Support/          Shared helper functions
-│   └── Views/partials/   Shared header, search, player, and footer
-├── database/
-│   ├── schema.sql        Clean installation with migrated catalog data
-│   └── legacy/           Original supplied SQL dump for reference
-├── public/
-│   ├── actions/          Validated POST request handlers
-│   ├── api/              JSON catalog, search, and play-history endpoints
-│   ├── assets/           Application CSS and JavaScript
-│   ├── uploads/          Artwork and external audio storage
-│   └── *.php             User-facing pages
-├── storage/logs/         Application error logs
-├── .env.example          Environment configuration template
-└── README.md
-```
+- Parameterized PDO queries help prevent SQL injection
+- CSRF tokens protect state-changing forms
+- Session regeneration and safer cookie settings strengthen authentication
+- Playlist ownership checks prevent cross-account modifications
+- Upload validation restricts file types, extensions, and destinations
+- Sensitive configuration remains outside the public directory
+- Apache rules block direct access to application, database, and log files
 
-Configure the web-server document root to `public/` for production. The root
-`.htaccess` blocks direct access to application, database, and log directories
-when the entire project is temporarily served through Apache.
+## 💳 Subscription flow
 
-## Subscription integration
+Paid plan selection creates a `pending` subscription request without storing card numbers or CVV values. Connect this workflow to a PCI-compliant hosted checkout provider before production.
 
-Paid plan selection creates a `pending` subscription record. Connect that
-record to a PCI-compliant hosted checkout provider before production. Never add
-card-number or CVV fields to the PulseWave database.
+## ✅ Before production
 
-## Production checklist
-
-- Remove or change the demo administrator
+- Replace or remove the demo administrator
 - Use HTTPS and a restricted database account
-- Set `APP_ENV=production`
-- Set a fixed `APP_URL`
-- Configure daily database and media backups
+- Set `APP_ENV=production` and a fixed `APP_URL`
+- Configure database and media backups
 - Add email verification and provider-backed password reset
 - Connect a hosted payment provider
 - Confirm music and artwork licensing
-- Review the privacy policy and terms with the real organization details
+- Publish organization-specific privacy terms
 
+---
+
+<div align="center">
+
+Built for people who believe every moment deserves the right soundtrack.
+
+**PulseWave — press play and find your frequency.**
+
+</div>
