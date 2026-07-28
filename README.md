@@ -24,7 +24,7 @@ PulseWave is a modern, database-driven music streaming experience built with PHP
 
 <br>
 
-<img src="Screenshot%202026-07-28%20233645%281%29.png" alt="PulseWave home page" width="100%">
+<img src="README assets\Screenshot 2026-07-28 233645.png" alt="PulseWave home page" width="100%">
 
 </div>
 
@@ -97,9 +97,6 @@ PulseWave is a modern, database-driven music streaming experience built with PHP
     </td>
   </tr>
 </table>
-
-> [!NOTE]
-> Keep the seven supplied screenshot files beside `README.md`, using their original filenames, so the complete gallery renders on GitHub.
 
 ## 🚀 What you can do
 
