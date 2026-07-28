@@ -1,0 +1,5 @@
+/.env
+/storage/logs/*.log
+/public/uploads/audio/*
+!/public/uploads/audio/README.md
+
