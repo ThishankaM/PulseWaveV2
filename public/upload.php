@@ -8,14 +8,14 @@ $artists = CatalogRepository::artists();
 $genres = CatalogRepository::genres();
 $pageTitle = 'Upload track';
 $pageDescription = 'Add a new track to the PulseWave catalog.';
-require APP_PATH . '/Views/partials/header.php';
+require APP_PATH . '/Views/partials/header-v3.php';
 ?>
 
 <section class="form-page section-shell">
     <div class="form-intro">
-        <span class="eyebrow">Artist tools</span>
-        <h1>Upload a new track</h1>
-        <p>Add the audio, artwork and catalog details together. File names are randomized and validated before storage.</p>
+        <span class="eyebrow">Creator studio</span>
+        <h1>Release something new</h1>
+        <p>Add the track, artwork and release details. We handle the technical details so you can focus on the sound.</p>
         <ul class="check-list">
             <li>MP3, WAV, FLAC, OGG or OPUS audio</li>
             <li>JPG, PNG or WebP artwork</li>
@@ -45,18 +45,18 @@ require APP_PATH . '/Views/partials/header.php';
             <label><span>Release year</span><input type="number" name="release_year" min="1900" max="<?= date('Y') + 1 ?>" value="<?= date('Y') ?>"></label>
         </div>
         <label class="file-drop">
-            <span>Audio file</span>
+            <span><?= icon('music') ?> Audio file</span>
             <input type="file" name="audio_file" accept=".mp3,.wav,.flac,.ogg,.opus,audio/*" required>
             <small data-file-name>Choose an audio file</small>
         </label>
         <label class="file-drop">
-            <span>Cover artwork</span>
+            <span><?= icon('upload') ?> Cover artwork</span>
             <input type="file" name="cover_file" accept=".jpg,.jpeg,.png,.webp,image/*">
             <small data-file-name>Optional — default artwork will be used</small>
         </label>
-        <button class="button button-primary" type="submit">Upload track</button>
+        <button class="button button-primary" type="submit"><?= icon('upload') ?> Publish release</button>
     </form>
 </section>
 
-<?php require APP_PATH . '/Views/partials/footer.php'; ?>
+<?php require APP_PATH . '/Views/partials/footer-v3.php'; ?>
 

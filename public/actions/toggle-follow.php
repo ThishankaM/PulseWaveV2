@@ -15,6 +15,15 @@ if ($artistId < 1 || !CatalogRepository::artist($artistId)) {
 }
 
 $following = CatalogRepository::toggleFollow($artistId, Auth::id());
+$acceptsJson = str_contains((string) ($_SERVER['HTTP_ACCEPT'] ?? ''), 'application/json');
+if ($acceptsJson) {
+    $artist = CatalogRepository::artist($artistId);
+    json_response([
+        'following' => $following,
+        'follower_count' => (int) ($artist['follower_count'] ?? 0),
+        'message' => $following ? 'Following artist.' : 'Artist removed from follows.',
+    ]);
+}
 flash('success', $following ? 'You are now following this artist.' : 'Artist removed from your follows.');
 redirect('artist.php?id=' . $artistId);
 

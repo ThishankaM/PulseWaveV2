@@ -10,6 +10,11 @@ foreach ($results['tracks'] as &$track) {
     $track['cover_url'] = media_url($track['cover_path']);
 }
 unset($track);
+foreach ($results['releases'] as &$release) {
+    $release['url'] = url('release.php?track=' . (int) $release['id']);
+    $release['cover_url'] = media_url($release['cover_path']);
+}
+unset($release);
 foreach ($results['artists'] as &$artist) {
     $artist['url'] = url('artist.php?id=' . (int) $artist['id']);
     $artist['image_url'] = media_url($artist['image_path']);

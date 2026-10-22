@@ -17,10 +17,12 @@ $userStatement = db()->prepare(
 $userStatement->execute([Auth::id()]);
 $profile = $userStatement->fetch();
 $stats = LibraryRepository::userStats(Auth::id());
+$recentTracks = CatalogRepository::recentlyPlayedByUser(Auth::id(), 4);
+$recentIds = implode(',', array_column($recentTracks, 'id'));
 
 $pageTitle = 'Profile';
 $pageDescription = 'Manage your PulseWave profile.';
-require APP_PATH . '/Views/partials/header.php';
+require APP_PATH . '/Views/partials/header-v3.php';
 ?>
 
 <section class="profile-layout section-shell">
@@ -37,8 +39,8 @@ require APP_PATH . '/Views/partials/header.php';
 
     <div class="profile-content">
         <section class="panel">
-            <span class="eyebrow">Your activity</span>
-            <h2>Listening overview</h2>
+            <span class="eyebrow">Your listening identity</span>
+            <h2>Your PulseWave story</h2>
             <div class="stat-grid">
                 <div><strong><?= (int) $stats['playlists'] ?></strong><span>Playlists</span></div>
                 <div><strong><?= (int) $stats['likes'] ?></strong><span>Liked tracks</span></div>
@@ -47,9 +49,21 @@ require APP_PATH . '/Views/partials/header.php';
             </div>
         </section>
 
+        <?php if ($recentTracks): ?>
+        <section class="panel profile-recent">
+            <span class="eyebrow">Back in rotation</span>
+            <h2>Recently played</h2>
+            <div class="track-grid profile-track-grid" data-play-collection="<?= e($recentIds) ?>" data-queue-label="Recently played">
+                <?php foreach ($recentTracks as $track): ?>
+                    <?php render_track_card($track); ?>
+                <?php endforeach; ?>
+            </div>
+        </section>
+        <?php endif; ?>
+
         <section class="panel">
-            <span class="eyebrow">Account details</span>
-            <h2>Edit profile</h2>
+            <span class="eyebrow">Personal details</span>
+            <h2>Edit your profile</h2>
             <form class="stack-form" method="post" action="<?= e(url('actions/profile.php')) ?>">
                 <?= csrf_input() ?>
                 <label><span>Display name</span><input type="text" name="name" value="<?= e($profile['name']) ?>" minlength="2" maxlength="80" required></label>
@@ -69,5 +83,5 @@ require APP_PATH . '/Views/partials/header.php';
     </div>
 </section>
 
-<?php require APP_PATH . '/Views/partials/footer.php'; ?>
+<?php require APP_PATH . '/Views/partials/footer-v3.php'; ?>
 

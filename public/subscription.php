@@ -24,13 +24,13 @@ if (Auth::check()) {
 $pageTitle = 'Upgrade';
 $pageDescription = 'Compare PulseWave subscription plans.';
 $activeNav = 'upgrade';
-require APP_PATH . '/Views/partials/header.php';
+require APP_PATH . '/Views/partials/header-v3.php';
 ?>
 
 <section class="page-hero section-shell centered-hero">
-    <span class="eyebrow">Listen your way</span>
+    <span class="eyebrow">Choose how you listen</span>
     <h1>Simple plans. More music.</h1>
-    <p>Choose the experience that fits you. Paid plans create a checkout request without storing card details.</p>
+    <p>Higher quality, more freedom and a listening experience built around you.</p>
 </section>
 
 <section class="content-section section-shell">
@@ -47,9 +47,9 @@ require APP_PATH . '/Views/partials/header.php';
                 </div>
                 <ul>
                     <?php foreach ($features as $feature): ?>
-                        <li><span aria-hidden="true">✓</span><?= e($feature) ?></li>
+                        <li><span aria-hidden="true"><?= icon('check') ?></span><?= e($feature) ?></li>
                     <?php endforeach; ?>
-                    <li><span aria-hidden="true">✓</span>Up to <?= (int) $plan['max_devices'] ?> device<?= (int) $plan['max_devices'] === 1 ? '' : 's' ?></li>
+                    <li><span aria-hidden="true"><?= icon('check') ?></span>Up to <?= (int) $plan['max_devices'] ?> device<?= (int) $plan['max_devices'] === 1 ? '' : 's' ?></li>
                 </ul>
                 <?php if ($currentPlanId === (int) $plan['id']): ?>
                     <button class="button button-ghost button-wide" type="button" disabled>Current plan</button>
@@ -67,8 +67,8 @@ require APP_PATH . '/Views/partials/header.php';
             </article>
         <?php endforeach; ?>
     </div>
-    <p class="payment-note">For production, connect the pending checkout request to a PCI-compliant hosted payment provider. PulseWave never asks this form for a card number or CVV.</p>
+    <p class="payment-note">Prices shown in USD. Change or cancel your plan at any time. Device limits apply per account.</p>
 </section>
 
-<?php require APP_PATH . '/Views/partials/footer.php'; ?>
+<?php require APP_PATH . '/Views/partials/footer-v3.php'; ?>
 

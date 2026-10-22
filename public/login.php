@@ -10,7 +10,7 @@ $mode = ($_GET['mode'] ?? '') === 'signup' ? 'signup' : 'signin';
 $pageTitle = $mode === 'signup' ? 'Create account' : 'Sign in';
 $pageDescription = 'Sign in to PulseWave or create a free account.';
 $bodyClass = 'auth-page';
-require APP_PATH . '/Views/partials/header.php';
+require APP_PATH . '/Views/partials/header-v3.php';
 ?>
 
 <section class="auth-shell section-shell" data-auth-shell data-mode="<?= e($mode) ?>">
@@ -35,7 +35,7 @@ require APP_PATH . '/Views/partials/header.php';
         <div class="auth-panel" data-auth-panel="signin" <?= $mode !== 'signin' ? 'hidden' : '' ?>>
             <span class="eyebrow">Good to see you</span>
             <h2>Sign in</h2>
-            <p>Continue to your playlists and favourites.</p>
+            <p>Continue to your playlists and favorites.</p>
             <form class="stack-form" method="post" action="<?= e(url('actions/auth.php')) ?>">
                 <?= csrf_input() ?>
                 <input type="hidden" name="operation" value="signin">
@@ -87,5 +87,5 @@ require APP_PATH . '/Views/partials/header.php';
     </div>
 </section>
 
-<?php require APP_PATH . '/Views/partials/footer.php'; ?>
+<?php require APP_PATH . '/Views/partials/footer-v3.php'; ?>
 

@@ -21,7 +21,7 @@ $tracks = $statement->fetchAll();
 
 $pageTitle = 'Creator dashboard';
 $pageDescription = 'Manage PulseWave catalog uploads.';
-require APP_PATH . '/Views/partials/header.php';
+require APP_PATH . '/Views/partials/header-v3.php';
 ?>
 
 <section class="page-hero section-shell dashboard-hero">
@@ -30,7 +30,7 @@ require APP_PATH . '/Views/partials/header.php';
         <h1>Creator dashboard</h1>
         <p>Manage catalog uploads and review track performance.</p>
     </div>
-    <a class="button button-primary" href="<?= e(url('upload.php')) ?>">Upload new track</a>
+    <a class="button button-primary" href="<?= e(url('upload.php')) ?>"><?= icon('plus') ?> Release new music</a>
 </section>
 
 <section class="content-section section-shell">
@@ -56,7 +56,7 @@ require APP_PATH . '/Views/partials/header.php';
                             <form method="post" action="<?= e(url('actions/delete-track.php')) ?>" data-confirm="Remove this track from the catalog?">
                                 <?= csrf_input() ?>
                                 <input type="hidden" name="track_id" value="<?= (int) $track['id'] ?>">
-                                <button class="text-danger" type="submit">Remove</button>
+                                <button class="text-danger" type="submit"><?= icon('trash') ?><span>Remove</span></button>
                             </form>
                         <?php else: ?>
                             <span class="muted">Protected</span>
@@ -69,5 +69,5 @@ require APP_PATH . '/Views/partials/header.php';
     </div>
 </section>
 
-<?php require APP_PATH . '/Views/partials/footer.php'; ?>
+<?php require APP_PATH . '/Views/partials/footer-v3.php'; ?>
 

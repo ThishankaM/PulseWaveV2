@@ -13,6 +13,7 @@ final class CatalogRepository
                 t.audio_path,
                 t.cover_path,
                 t.release_year,
+                t.duration_seconds,
                 t.play_count,
                 t.like_count,
                 a.name AS artist_name,
@@ -33,6 +34,22 @@ final class CatalogRepository
         return $statement->fetchAll();
     }
 
+    public static function trendingTracks(int $limit = 12): array
+    {
+        $limit = max(1, min($limit, 50));
+        $statement = db()->prepare(
+            self::trackSelect() .
+            ' INNER JOIN listening_history history ON history.track_id = t.id
+              WHERE history.played_at >= DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 7 DAY)
+              GROUP BY t.id
+              ORDER BY COUNT(history.id) DESC, t.play_count DESC
+              LIMIT ' . $limit
+        );
+        $statement->execute([Auth::id() ?? 0]);
+        $tracks = $statement->fetchAll();
+        return $tracks ?: self::featuredTracks($limit);
+    }
+
     public static function recentTracks(int $limit = 12): array
     {
         $limit = max(1, min($limit, 50));
@@ -41,10 +58,86 @@ final class CatalogRepository
         return $statement->fetchAll();
     }
 
+    public static function recentlyPlayedByUser(int $userId, int $limit = 8): array
+    {
+        $limit = max(1, min($limit, 20));
+        $statement = db()->prepare(
+            'SELECT
+                t.id,
+                t.artist_id,
+                t.title,
+                t.audio_path,
+                t.cover_path,
+                t.release_year,
+                t.duration_seconds,
+                t.play_count,
+                t.like_count,
+                a.name AS artist_name,
+                EXISTS(
+                    SELECT 1 FROM likes liked
+                    WHERE liked.track_id = t.id AND liked.user_id = ?
+                ) AS is_liked,
+                MAX(h.played_at) AS last_played_at
+             FROM listening_history h
+             INNER JOIN tracks t ON t.id = h.track_id
+             INNER JOIN artists a ON a.id = t.artist_id
+             WHERE h.user_id = ?
+             GROUP BY t.id
+             ORDER BY last_played_at DESC
+             LIMIT ' . $limit
+        );
+        $statement->execute([$userId, $userId]);
+        return $statement->fetchAll();
+    }
+
     public static function allTracks(): array
     {
         $statement = db()->prepare(self::trackSelect() . ' ORDER BY a.name, t.title');
         $statement->execute([Auth::id() ?? 0]);
+        return $statement->fetchAll();
+    }
+
+    public static function releases(int $limit = 12): array
+    {
+        $limit = max(1, min($limit, 30));
+        $statement = db()->prepare(
+            'SELECT
+                t.id,
+                t.artist_id,
+                t.title,
+                t.cover_path,
+                t.release_year,
+                t.duration_seconds,
+                a.name AS artist_name,
+                grouped.track_count,
+                grouped.latest_at
+             FROM (
+                 SELECT artist_id, cover_path, MIN(id) AS keep_id, COUNT(*) AS track_count, MAX(created_at) AS latest_at
+                 FROM tracks
+                 WHERE cover_path <> "uploads/album_art/default-album-art.jpg"
+                 GROUP BY artist_id, cover_path
+             ) grouped
+             INNER JOIN tracks t ON t.id = grouped.keep_id
+             INNER JOIN artists a ON a.id = t.artist_id
+             ORDER BY grouped.latest_at DESC, t.id DESC
+             LIMIT ' . $limit
+        );
+        $statement->execute();
+        return $statement->fetchAll();
+    }
+
+    public static function releaseTracks(int $representativeId): array
+    {
+        $representative = self::track($representativeId);
+        if (!$representative) {
+            return [];
+        }
+        $statement = db()->prepare(
+            self::trackSelect() .
+            ' WHERE t.artist_id = ? AND t.cover_path = ?
+              ORDER BY t.release_year, t.id'
+        );
+        $statement->execute([Auth::id() ?? 0, (int) $representative['artist_id'], (string) $representative['cover_path']]);
         return $statement->fetchAll();
     }
 
@@ -120,6 +213,29 @@ final class CatalogRepository
         return $artist ?: null;
     }
 
+    public static function followedArtists(int $userId, int $limit = 12): array
+    {
+        $limit = max(1, min($limit, 30));
+        $statement = db()->prepare(
+            'SELECT
+                a.id,
+                a.name,
+                a.bio,
+                a.image_path,
+                a.follower_count,
+                COUNT(DISTINCT t.id) AS track_count
+             FROM follows f
+             INNER JOIN artists a ON a.id = f.artist_id
+             LEFT JOIN tracks t ON t.artist_id = a.id
+             WHERE f.user_id = ?
+             GROUP BY a.id
+             ORDER BY f.created_at DESC
+             LIMIT ' . $limit
+        );
+        $statement->execute([$userId]);
+        return $statement->fetchAll();
+    }
+
     public static function genres(): array
     {
         $statement = db()->query(
@@ -152,7 +268,7 @@ final class CatalogRepository
         $query = trim($query);
         $limit = max(1, min($limit, 20));
         if (mb_strlen($query) < 2) {
-            return ['tracks' => [], 'artists' => [], 'genres' => []];
+            return ['releases' => [], 'tracks' => [], 'artists' => [], 'genres' => []];
         }
 
         $like = '%' . $query . '%';
@@ -184,7 +300,19 @@ final class CatalogRepository
         );
         $genreStatement->execute([$like]);
 
+        $releaseStatement = db()->prepare(
+            'SELECT t.id, t.title, t.cover_path, t.release_year, a.name AS artist_name
+             FROM tracks t
+             INNER JOIN artists a ON a.id = t.artist_id
+             WHERE t.cover_path <> "uploads/album_art/default-album-art.jpg"
+               AND (t.title LIKE ? OR a.name LIKE ?)
+             ORDER BY t.release_year DESC, t.play_count DESC
+             LIMIT ' . $limit
+        );
+        $releaseStatement->execute([$like, $like]);
+
         return [
+            'releases' => $releaseStatement->fetchAll(),
             'tracks' => $trackStatement->fetchAll(),
             'artists' => $artistStatement->fetchAll(),
             'genres' => $genreStatement->fetchAll(),
